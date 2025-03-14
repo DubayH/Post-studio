@@ -8,6 +8,7 @@ public class SpringbootApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(dev.germantovar.springboot.SpringbootApplication.class, args);
+
 	}
 
 }
