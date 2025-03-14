@@ -17,7 +17,7 @@ public class Estudiantes {
     private long id;
     private String nombre;
     private String apellido;
-    private String cedula;
+    private String contraseña;
 
 
 }

@@ -16,8 +16,8 @@ public class Profesores {
     private long id;
     private String nombre;
     private String apellido;
-    private String cedula;
-    private String correo;
+    private String contraseña;
+    private String materia;
 
 
 }
