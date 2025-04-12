@@ -1,26 +1,33 @@
 package dev.germantovar.springboot.entities;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name = "estudiantes")
 @Getter
 @Setter
-@EqualsAndHashCode
+@Table(name = "estudiantes")
 public class Estudiantes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
+
+    @Column(nullable = false, length = 50)
     private String nombre;
 
+    @Column(nullable = false, length = 50)
     private String apellido;
-    private String contraseña;
-/*se agrega comentario*/
-    
 
+    @Column(nullable = false)
+    private String contraseña;
+
+    @OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Profesores> profesores;
 }
+
 

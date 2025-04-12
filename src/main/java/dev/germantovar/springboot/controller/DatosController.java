@@ -1,34 +1,54 @@
 package dev.germantovar.springboot.controller;
-import dev.germantovar.springboot.entities.Estudiantes;
+import org.springframework.http.ResponseEntity;
+import java.util.Optional;
+
+import org.springframework.http.HttpStatus;
 import dev.germantovar.springboot.entities.Profesores;
-import dev.germantovar.springboot.services.IEstudiantesService;
-import dev.germantovar.springboot.services.IProfesoresService;
+import dev.germantovar.springboot.services.ProfesoresService;
+import dev.germantovar.springboot.repository.ProfesoresRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
-@RequestMapping("/api/datos")
+@RequestMapping("/api/profesores")
 public class DatosController {
-    @Autowired
-    private IEstudiantesService estudiantesService;
 
     @Autowired
-    private IProfesoresService profesoresService;
+    private ProfesoresRepository profesoresRepository;
 
-    @GetMapping("/lista")
-    public Map<String, Object> getDatosCompletos() {
-        List<Estudiantes> estudiantes = estudiantesService.getAll();
-        List<Profesores> profesores = profesoresService.getAll();
+    @Autowired
+    private ProfesoresService profesoresService;
 
-        Map<String, Object> response = new HashMap<>();
-        response.put("estudiantes", estudiantes);
-        response.put("profesores", profesores);
-
-        return response;
+    @GetMapping("/estudiante/{estudianteId}")
+    public List<Profesores> obtenerProfesoresPorEstudiante(@PathVariable Long estudianteId) {
+        return profesoresRepository.findByEstudianteId(estudianteId);
     }
+
+    @PostMapping("/estudiante/{estudianteId}/agregar")
+    public Profesores agregarProfesor(@PathVariable Long estudianteId, @RequestBody Profesores profesor) {
+        return profesoresService.save(estudianteId, profesor);
+
+    }
+    @PutMapping("/actualizar/{id}")
+    public ResponseEntity<Profesores> actualizarProfesor(@PathVariable("id") Long id, @RequestBody Profesores profesor) {
+        Optional<Profesores> profesorData = profesoresRepository.findById(id);
+
+        if (profesorData.isPresent()) {
+            Profesores profesor1 = profesorData.get();
+            profesor1.setNombre(profesor.getNombre());
+            profesor1.setApellido(profesor.getApellido());
+            profesor1.setMateria(profesor.getMateria());
+            profesor1.setContraseña(profesor.getContraseña());
+
+            return new ResponseEntity<>(profesoresRepository.save(profesor1), HttpStatus.ACCEPTED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
 }
+
 

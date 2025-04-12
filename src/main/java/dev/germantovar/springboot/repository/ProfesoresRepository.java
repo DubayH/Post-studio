@@ -1,11 +1,10 @@
 package dev.germantovar.springboot.repository;
 
-
 import dev.germantovar.springboot.entities.Profesores;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
-public interface ProfesoresRepository extends CrudRepository<Profesores, Long> {
+import java.util.List;
 
+public interface ProfesoresRepository extends JpaRepository<Profesores, Long> {
+    List<Profesores> findByEstudianteId(Long estudianteId);
 }
