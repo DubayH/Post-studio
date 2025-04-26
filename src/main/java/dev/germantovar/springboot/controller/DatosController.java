@@ -31,6 +31,7 @@ public class DatosController {
         return profesoresService.save(estudianteId, profesor);
 
     }
+    // se realiza comentario
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Profesores> actualizarProfesor(@PathVariable("id") Long id, @RequestBody Profesores profesor) {
         Optional<Profesores> profesorData = profesoresRepository.findById(id);
