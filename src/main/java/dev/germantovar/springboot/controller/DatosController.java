@@ -1,4 +1,5 @@
 package dev.germantovar.springboot.controller;
+import dev.germantovar.springboot.services.EstudiantesService;
 import org.springframework.http.ResponseEntity;
 import java.util.Optional;
 
@@ -20,6 +21,8 @@ public class DatosController {
 
     @Autowired
     private ProfesoresService profesoresService;
+    @Autowired
+    private EstudiantesService estudiantesService;
 
     @GetMapping("/estudiante/{estudianteId}")
     public List<Profesores> obtenerProfesoresPorEstudiante(@PathVariable Long estudianteId) {
@@ -48,8 +51,21 @@ public class DatosController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    @RestController
+    @RequestMapping("/api/estudiantes")
+    public class EstudiantesController {
+        @DeleteMapping("/eliminar/{id}")
+        public ResponseEntity<Void> eliminarEstudiante(@PathVariable Long id) {
+            if (estudiantesService.existsById(id)) {
+                estudiantesService.deleteById(id);
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT); // 204
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 404
+            }
+        }
+    }
+    }
 
 
-}
 
 

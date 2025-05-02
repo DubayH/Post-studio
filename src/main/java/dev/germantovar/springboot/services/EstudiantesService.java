@@ -11,12 +11,24 @@ import java.util.List;
 public class EstudiantesService implements IEstudiantesService {
     @Autowired
     private EstudiantesRepository repository;
+
     @Override
-    public List<Estudiantes> getAll(){
-        return (List<Estudiantes>) repository.findAll();
+    public List<Estudiantes> getAll() {
+        return repository.findAll();
     }
 
+    @Override
+    public void deleteById(Long id) {
+        repository.deleteById(id);
+    }
 
-
+    @Override
+    public boolean existsById(Long id) {
+        return repository.existsById(id);
+    }
 }
+
+
+
+
 
