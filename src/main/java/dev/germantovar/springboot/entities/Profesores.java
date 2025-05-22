@@ -31,4 +31,10 @@ public class Profesores {
 
     @Column(nullable = false)
     private String contraseña;
+
+    @Column(nullable = false)
+    private String imagen;
+
+    @Column(nullable = false)
+    private String usuario;
 }

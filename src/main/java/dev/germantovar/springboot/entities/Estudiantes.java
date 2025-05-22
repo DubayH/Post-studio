@@ -25,6 +25,9 @@ public class Estudiantes {
     @Column(nullable = false)
     private String contraseña;
 
+    @Column(nullable = false)
+    private String usuario;
+
     @OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Profesores> profesores;
